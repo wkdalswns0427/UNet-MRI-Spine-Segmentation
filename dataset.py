@@ -21,5 +21,6 @@ class SpineDataset(Dataset):
         img_path = os.path.join(self.image_dir, self.images[index])
         mask_path = os.path.join(self.mask_dir, self.images[index].replace(".dcm","_mat"))
         rawimage = dcm.dcmread(img_path).pixel_array
-        rawimage =
-        image = np.array(Image.rawimage.)
+        image_uns = rawimage.astype(float)
+        image = (np.maximum(image_uns,0)/image_uns.max())*255
+        image = np.uint8(image)
