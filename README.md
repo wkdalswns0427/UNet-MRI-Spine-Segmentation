@@ -1,0 +1,2 @@
+#Sementic Segmentation
+practice repo
