@@ -19,13 +19,13 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 BATCH_SIZE = 64
 NUM_EPOCHS = 3
 NUM_WORKERS = 2
-IMAGE_HEIGHT = 240  # 1280 originally
-IMAGE_WIDTH = 160  # 1918 originally
+IMAGE_HEIGHT = 160  # 1280 originally
+IMAGE_WIDTH = 240  # 1918 originally
 PIN_MEMORY = True
 LOAD_MODEL = False
 TRAIN_IMG_DIR = "data/train/img/"
 TRAIN_MASK_DIR = "data/train/label/"
-VAL_IMG_DIR = "data/val/label/"
+VAL_IMG_DIR = "data/val/img/"
 VAL_MASK_DIR = "data/val/label/"
 
 def train_fn(loader, model, optimizer, loss_fn, scaler):
@@ -78,7 +78,7 @@ def main():
         ],
     )
 
-    model = UNet(in_channels=3, out_channels=1).to(DEVICE) # change out_channel for multi classes
+    model = UNet(in_channels=1, out_channels=1).to(DEVICE) # change out_channel for multi classes
     loss_fn = nn.BCEWithLogitsLoss()  # cross entropy loss for multiple classes
     optimizer = optim.Adam(model.parameters(),lr=LEARNING_RATE)
 
@@ -94,9 +94,9 @@ def main():
         PIN_MEMORY,
     )
 
-    if LOAD_MODEL:
-        load_checkpoint(torch.load("checkpoint.pth.tar"), model)
-    check_accuracy(val_loader, model, device=DEVICE)
+    # if LOAD_MODEL:
+    #     load_checkpoint(torch.load("checkpoint.pth.tar"), model)
+    # check_accuracy(val_loader, model, device=DEVICE)
     scaler = torch.cuda.amp.GradScaler()
 
     for epoch in range(NUM_EPOCHS):

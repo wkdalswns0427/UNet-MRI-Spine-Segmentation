@@ -2,7 +2,7 @@ import os
 import pydicom as dcm
 import pylibjpeg
 import numpy as np
-import scipy as io
+from scipy import io
 from torch.utils.data import Dataset
 
 # image in dcm format
