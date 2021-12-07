@@ -1,2 +1,4 @@
-#Sementic Segmentation
-practice repo
+# Sementic Segmentation
+practice repoitory
+
+UNet based Segmentation 
