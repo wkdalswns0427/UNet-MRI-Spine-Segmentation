@@ -58,8 +58,10 @@ def main():
             A.HorizontalFlip(p=0.5),
             A.VerticalFlip(p=0.1),
             A.Normalize(
-                mean=[0.0, 0.0, 0.0],
-                std=[1.0, 1.0, 1.0],
+                # mean=[0.0, 0.0, 0.0],
+                # std=[1.0, 1.0, 1.0],
+                mean=[0.0],
+                std=[1.0],
                 max_pixel_value=255.0,
             ),
             ToTensorV2(),
@@ -70,8 +72,10 @@ def main():
         [
             A.Resize(height=IMAGE_HEIGHT, width=IMAGE_WIDTH),
             A.Normalize(
-                mean=[0.0, 0.0, 0.0],
-                std=[1.0, 1.0, 1.0],
+                # mean=[0.0, 0.0, 0.0],
+                # std=[1.0, 1.0, 1.0],
+                mean=[0.0],
+                std=[1.0],
                 max_pixel_value=255.0,
             ),
             ToTensorV2(),
@@ -80,7 +84,7 @@ def main():
 
     model = UNet(in_channels=1, out_channels=1).to(DEVICE) # change out_channel for multi classes
     loss_fn = nn.BCEWithLogitsLoss()  # cross entropy loss for multiple classes
-    optimizer = optim.Adam(model.parameters(),lr=LEARNING_RATE)
+    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
     train_loader, val_loader = get_loaders(
         TRAIN_IMG_DIR,

@@ -3,9 +3,10 @@ import pydicom as dcm
 import numpy as np
 from scipy import io
 from torch.utils.data import Dataset
-
 # image in dcm format
 # label in matlab dictionary format
+
+
 class SpineDataset(Dataset):
     def __init__(self, image_dir, mask_dir, transform=None):
         self.image_dir = image_dir
