@@ -21,7 +21,7 @@ class UNet(nn.Module):
     def __init__(
             self, in_channels = 3, out_channels = 1, features = [64, 128, 256, 512],
     ):
-        super(UNET, self).__init__()
+        super(UNet, self).__init__()
         self.ups = nn.ModuleList()
         self.downs = nn.ModuleList()
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
@@ -66,7 +66,7 @@ class UNet(nn.Module):
 
 def test():
     x = torch.randn((3, 1, 161, 161))
-    model = UNET(in_channels=1, out_channels=1)
+    model = UNet(in_channels=1, out_channels=1)
     preds = model(x)
     print(preds.shape)
     print(x.shape)

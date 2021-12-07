@@ -25,5 +25,5 @@ PIN_MEMORY = True
 LOAD_MODEL = False
 TRAIN_IMG_DIR = "Train/img/"
 TRAIN_MASK_DIR = "Train/label/"
-VAL_IMG_DIR = "data/val_images/"
-VAL_MASK_DIR = "data/val_masks/"
+VAL_IMG_DIR = "Test/img/"
+# VAL_MASK_DIR = "data/val_masks/"
