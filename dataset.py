@@ -1,6 +1,5 @@
 import os
 import pydicom as dcm
-import pylibjpeg
 import numpy as np
 from scipy import io
 from torch.utils.data import Dataset
