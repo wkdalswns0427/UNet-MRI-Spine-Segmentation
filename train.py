@@ -31,6 +31,7 @@ VAL_MASK_DIR = "data/val/label/"
 def train_fn(loader, model, optimizer, loss_fn, scaler):
     loop = tqdm(loader)
 
+    #여기 어딘가 에러 있는거같은 확인할 것.
     for batch_idx, (data, targets) in enumerate(loop):
         data = data.to(device=DEVICE)
         targets = targets.float().unsqueeze(1).to(device=DEVICE)
@@ -82,7 +83,7 @@ def main():
         ],
     )
 
-    model = UNet(in_channels=3, out_channels=1).to(DEVICE) # change out_channel for multi classes
+    model = UNet(in_channels=1, out_channels=1).to(DEVICE) # change out_channel for multi classes
     loss_fn = nn.BCEWithLogitsLoss()  # cross entropy loss for multiple classes
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 

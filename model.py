@@ -36,7 +36,7 @@ class UNet(nn.Module):
         # upward processing
         for feature in reversed(features):
             self.ups.append(
-                nn.ConvTranspose2d(feature*2, feature, kernel_size = 2, stride = 2,)
+                nn.ConvTranspose2d(feature*2, feature, kernel_size= 2, stride = 2,)
             )
             self.ups.append(DoubleConv(feature*2, feature))
 
@@ -67,7 +67,7 @@ class UNet(nn.Module):
         return self.final_conv(x)
 
 def test():
-    x = torch.randn((3, 1, 161, 161))
+    x = torch.randn((1, 1, 161, 161))
     model = UNet(in_channels=1, out_channels=1)
     preds = model(x)
     print(preds.shape)
