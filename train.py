@@ -16,7 +16,7 @@ from utils import (
 # Hyperparameters and directories
 LEARNING_RATE = 1e-4
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-BATCH_SIZE = 16
+BATCH_SIZE = 64
 NUM_EPOCHS = 3
 NUM_WORKERS = 2
 IMAGE_HEIGHT = 240  # 1280 originally
@@ -86,6 +86,7 @@ def main():
         TRAIN_IMG_DIR,
         TRAIN_MASK_DIR,
         VAL_IMG_DIR,
+        VAL_MASK_DIR,
         BATCH_SIZE,
         train_transform,
         val_transforms,
@@ -109,9 +110,9 @@ def main():
         save_checkpoint(checkpoint)
         check_accuracy(val_loader, model, device=DEVICE)
 
-        # save_predictions_as_imgs(
-        #     val_loader, model, folder="saved_images/", device=DEVICE
-        # )
+        save_predictions_as_imgs(
+            val_loader, model, folder="saved_imgs/", device=DEVICE
+        )
 
 if __name__ == "__main__":
     main()
