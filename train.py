@@ -80,6 +80,23 @@ def main():
 
     model = UNet(in_channels=3, out_channels=1).to(DEVICE) # change out_channel for multi classes
     loss_fn = nn.BCEWithLogitsLoss()  # cross entropy loss for multiple classes
+    optimizer = optim.Adam(model.parameters(),lr=LEARNING_RATE)
+
+    train_loader, val_loader = get_loaders(
+        TRAIN_IMG_DIR,
+        TRAIN_MASK_DIR,
+        VAL_IMG_DIR,
+        BATCH_SIZE,
+        train_transform,
+        val_transforms,
+        NUM_WORKERS,
+        PIN_MEMORY,
+    )
+    scaler = torch.cuda.amp.GradScaler()
+    
+    for epoch in range(NUM_EPOCHS):
+        train_fn(train_loader, model, optimizer, loss_fn, scaler)
+
 
 if __name__ == "__main__":
     main()
