@@ -5,13 +5,13 @@ from tqdm import tqdm
 import torch.nn as nn
 import torch.optim as optim
 from model import UNet
-# from utils import (
-#     load_checkpoint,
-#     save_checkpoint,
-#     get_loaders,
-#     check_accuracy,
-#     save_predictions_as_imgs,
-# )
+from utils import (
+    load_checkpoint,
+    save_checkpoint,
+    get_loaders,
+    check_accuracy,
+    save_predictions_as_imgs,
+)
 
 # Hyperparameters and directories
 LEARNING_RATE = 1e-4
@@ -23,10 +23,10 @@ IMAGE_HEIGHT = 240  # 1280 originally
 IMAGE_WIDTH = 160  # 1918 originally
 PIN_MEMORY = True
 LOAD_MODEL = False
-TRAIN_IMG_DIR = "Train/img/"
-TRAIN_MASK_DIR = "Train/label/"
-VAL_IMG_DIR = "Test/img/"
-# VAL_MASK_DIR = "data/val_masks/"
+TRAIN_IMG_DIR = "data/train/img/"
+TRAIN_MASK_DIR = "data/train/label/"
+VAL_IMG_DIR = "data/val/label/"
+VAL_MASK_DIR = "data/val/label/"
 
 def train_fn(loader, model, optimizer, loss_fn, scaler):
     loop = tqdm(loader)
@@ -92,11 +92,26 @@ def main():
         NUM_WORKERS,
         PIN_MEMORY,
     )
+
+    if LOAD_MODEL:
+        load_checkpoint(torch.load("checkpoint.pth.tar"), model)
+    check_accuracy(val_loader, model, device=DEVICE)
     scaler = torch.cuda.amp.GradScaler()
-    
+
     for epoch in range(NUM_EPOCHS):
         train_fn(train_loader, model, optimizer, loss_fn, scaler)
 
+        #save
+        checkpoint = {
+            "state_dict":model.state_dict(),
+            "optimizer":optimizer.state_dict(),
+        }
+        save_checkpoint(checkpoint)
+        check_accuracy(val_loader, model, device=DEVICE)
+
+        # save_predictions_as_imgs(
+        #     val_loader, model, folder="saved_images/", device=DEVICE
+        # )
 
 if __name__ == "__main__":
     main()
