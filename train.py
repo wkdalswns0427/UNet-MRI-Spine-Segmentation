@@ -117,7 +117,7 @@ def main():
         check_accuracy(val_loader, model, device=DEVICE)
 
         save_predictions_as_imgs(
-            val_loader, model, folder="saved_imgs/", device=DEVICE
+            val_loader, model, folder="saved_imgs", device=DEVICE
         )
 
 if __name__ == "__main__":
