@@ -288,3 +288,4 @@ $RECYCLE.BIN/
 /Test/
 /data/
 /checkpoint.pth.tar
+/saved_imgs/
