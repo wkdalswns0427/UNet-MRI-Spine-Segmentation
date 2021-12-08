@@ -24,6 +24,10 @@ https://drive.google.com/drive/folders/1yYqUdpa4-3hOSQmTGSORrrrz4Y71--tK?usp=sha
 !pip install --upgrade numpy
 
 !pip install pylibjpeg-libjpeg
+* install torch cuda
+
+pip3 install torch==1.10.0+cu113 torchvision==0.11.1+cu113 torchaudio===0.10.0+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+
 
 ## Project Description
 segemntation of 6 vertebrae with 7 masks
