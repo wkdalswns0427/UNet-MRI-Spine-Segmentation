@@ -3,6 +3,7 @@ import pydicom as dcm
 import numpy as np
 from scipy import io
 from torch.utils.data import Dataset
+import torchvision
 # image in dcm format
 # label in matlab dictionary format
 
@@ -24,6 +25,7 @@ class SpineDataset(Dataset):
         image_uns = rawimage.astype(float)
         image = (np.maximum(image_uns,0)/image_uns.max())*255
         image = np.uint8(image) # image
+        image = np.stack([image]).transpose((1, 2, 0))
         raw_mask = io.loadmat(mask_path)
         mask = raw_mask['label_separated'][:,:,0] # 0~6 channels 0~5:each spine, 6:full spine
 

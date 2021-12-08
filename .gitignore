@@ -287,3 +287,4 @@ $RECYCLE.BIN/
 /Train/
 /Test/
 /data/
+/checkpoint.pth.tar
