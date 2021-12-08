@@ -31,7 +31,6 @@ VAL_MASK_DIR = "data/val/label/"
 def train_fn(loader, model, optimizer, loss_fn, scaler):
     loop = tqdm(loader)
 
-    #여기 어딘가 에러 있는거같은 확인할 것.
     for batch_idx, (data, targets) in enumerate(loop):
         data = data.to(device=DEVICE)
         targets = targets.float().unsqueeze(1).to(device=DEVICE)
@@ -60,8 +59,6 @@ def main():
             A.HorizontalFlip(p=0.5),
             A.VerticalFlip(p=0.1),
             A.Normalize(
-                # mean=[0.0, 0.0, 0.0],
-                # std=[1.0, 1.0, 1.0],
                 mean=[0.0],
                 std=[1.0],
                 max_pixel_value=255.0,
@@ -74,8 +71,6 @@ def main():
         [
             A.Resize(height=IMAGE_HEIGHT, width=IMAGE_WIDTH),
             A.Normalize(
-                # mean=[0.0, 0.0, 0.0],
-                # std=[1.0, 1.0, 1.0],
                 mean=[0.0],
                 std=[1.0],
                 max_pixel_value=255.0,
@@ -100,25 +95,25 @@ def main():
         PIN_MEMORY,
     )
 
-    # if LOAD_MODEL:
-    #     load_checkpoint(torch.load("checkpoint.pth.tar"), model)
-    # check_accuracy(val_loader, model, device=DEVICE)
-    scaler = torch.cuda.amp.GradScaler()
-
-    for epoch in range(NUM_EPOCHS):
-        train_fn(train_loader, model, optimizer, loss_fn, scaler)
-
-        #save
-        checkpoint = {
-            "state_dict":model.state_dict(),
-            "optimizer":optimizer.state_dict(),
-        }
-        save_checkpoint(checkpoint)
-        check_accuracy(val_loader, model, device=DEVICE)
-
-        save_predictions_as_imgs(
-            val_loader, model, folder="saved_imgs", device=DEVICE
-        )
+    if LOAD_MODEL:
+        load_checkpoint(torch.load("checkpoint.pth.tar"), model)
+    check_accuracy(val_loader, model, device=DEVICE)
+    # scaler = torch.cuda.amp.GradScaler()
+    #
+    # for epoch in range(NUM_EPOCHS):
+    #     train_fn(train_loader, model, optimizer, loss_fn, scaler)
+    #
+    #     #save
+    #     checkpoint = {
+    #         "state_dict":model.state_dict(),
+    #         "optimizer":optimizer.state_dict(),
+    #     }
+    #     save_checkpoint(checkpoint)
+    #     check_accuracy(val_loader, model, device=DEVICE)
+    #
+    #     save_predictions_as_imgs(
+    #         val_loader, model, folder="saved_imgs", device=DEVICE
+    #     )
 
 if __name__ == "__main__":
     main()

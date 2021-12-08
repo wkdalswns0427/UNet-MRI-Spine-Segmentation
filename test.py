@@ -7,8 +7,7 @@ import torch.optim as optim
 from model import UNet
 from utils import (
     load_checkpoint,
-    save_checkpoint,
-    get_loaders,
+    get_test_loader,
     check_accuracy,
     save_predictions_as_imgs,
 )
@@ -24,6 +23,9 @@ PIN_MEMORY = True
 LOAD_MODEL = True
 TEST_IMG_DIR = "Test/img/"
 TEST_MASK_DIR = "Test/label/"
+# for experiment should delete
+VAL_IMG_DIR = "data/val/img/"
+VAL_MASK_DIR = "data/val/label/"
 
 def test_fn():
     test_transform = A.Compose(
@@ -43,13 +45,11 @@ def test_fn():
         ],
     )
 
-
     model = UNet(in_channels=1, out_channels=1).to(DEVICE)  # change out_channel for multi classes
-    loss_fn = nn.BCEWithLogitsLoss()  # cross entropy loss for multiple classes
 
-    test_loader = get_loaders(
-        TEST_IMG_DIR,
-        TEST_MASK_DIR,
+    test_loader = get_test_loader(
+        VAL_IMG_DIR,
+        VAL_MASK_DIR,
         BATCH_SIZE,
         test_transform,
         NUM_WORKERS,
