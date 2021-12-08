@@ -17,7 +17,7 @@ from utils import (
 LEARNING_RATE = 1e-4
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 BATCH_SIZE = 64
-NUM_EPOCHS = 3
+NUM_EPOCHS = 5
 NUM_WORKERS = 2
 IMAGE_HEIGHT = 160  # 1280 originally
 IMAGE_WIDTH = 240  # 1918 originally
@@ -95,25 +95,25 @@ def main():
         PIN_MEMORY,
     )
 
-    if LOAD_MODEL:
-        load_checkpoint(torch.load("checkpoint.pth.tar"), model)
-    check_accuracy(val_loader, model, device=DEVICE)
-    # scaler = torch.cuda.amp.GradScaler()
-    #
-    # for epoch in range(NUM_EPOCHS):
-    #     train_fn(train_loader, model, optimizer, loss_fn, scaler)
-    #
-    #     #save
-    #     checkpoint = {
-    #         "state_dict":model.state_dict(),
-    #         "optimizer":optimizer.state_dict(),
-    #     }
-    #     save_checkpoint(checkpoint)
-    #     check_accuracy(val_loader, model, device=DEVICE)
-    #
-    #     save_predictions_as_imgs(
-    #         val_loader, model, folder="saved_imgs", device=DEVICE
-    #     )
+    # if LOAD_MODEL:
+    #     load_checkpoint(torch.load("checkpoint.pth.tar"), model)
+    # check_accuracy(val_loader, model, device=DEVICE)
+    scaler = torch.cuda.amp.GradScaler()
+
+    for epoch in range(NUM_EPOCHS):
+        train_fn(train_loader, model, optimizer, loss_fn, scaler)
+
+        #save
+        checkpoint = {
+            "state_dict":model.state_dict(),
+            "optimizer":optimizer.state_dict(),
+        }
+        save_checkpoint(checkpoint)
+        check_accuracy(val_loader, model, device=DEVICE)
+
+        save_predictions_as_imgs(
+            val_loader, model, folder="saved_imgs", device=DEVICE
+        )
 
 if __name__ == "__main__":
     main()
