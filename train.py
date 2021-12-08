@@ -105,8 +105,8 @@ def main():
 
         #save
         checkpoint = {
-            "state_dict":model.state_dict(),
-            "optimizer":optimizer.state_dict(),
+            "state_dict": model.state_dict(),
+            "optimizer": optimizer.state_dict(),
         }
         save_checkpoint(checkpoint)
         check_accuracy(val_loader, model, device=DEVICE)
