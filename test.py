@@ -55,3 +55,10 @@ def test_fn():
         NUM_WORKERS,
         PIN_MEMORY,
     )
+
+    if LOAD_MODEL:
+        load_checkpoint(torch.load("checkpoint.pth.tar"), model)
+    check_accuracy(test_loader, model, device=DEVICE)
+
+if __name__ == "__main__":
+    test_fn()
