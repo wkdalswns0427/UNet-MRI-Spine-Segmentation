@@ -27,7 +27,7 @@ class SpineDataset(Dataset):
         image = np.uint8(image) # image
         image = np.stack([image]).transpose((1, 2, 0))
         raw_mask = io.loadmat(mask_path)
-        mask = raw_mask['label_separated'][:,:,6] # 0~6 channels 0~5:each spine, 6:full spine
+        mask = raw_mask['label_separated'][:, :, 0] # 0~6 channels 0~5:each spine, 6:full spine
 
         if self.transform is not None:
             augmentations = self.transform(image=image, mask=mask)
