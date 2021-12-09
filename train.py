@@ -16,7 +16,7 @@ from utils import (
 )
 
 # Hyperparameters and directories
-LEARNING_RATE = 1e-3
+LEARNING_RATE = 5e-4
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 BATCH_SIZE = 8
 NUM_EPOCHS = 50
@@ -88,7 +88,7 @@ def main():
         # train_fn(train_loader, model, optimizer, loss_fn, scaler)
         train_fn_no_scale(train_loader, model, optimizer, loss_fn)
 
-        print("Current Epoch : ", epoch, "/", NUM_EPOCHS)
+        print("Current Epoch : ", epoch+1, "/", NUM_EPOCHS)
 
         #save
         checkpoint = {

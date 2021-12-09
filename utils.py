@@ -4,6 +4,8 @@ import torchvision
 import numpy as np
 from dataset import SpineDataset
 from torch.utils.data import DataLoader
+import gc
+
 
 def save_checkpoint(state, filename="checkpoint.pth.tar"):
     print("=> Saving checkpoint")
@@ -127,6 +129,8 @@ def save_result_as_numpy(
 ):
     model.eval()
     for idx, (x) in enumerate(loader.dataset):
+        gc.collect()
+        torch.cuda.empty_cache()
         if idx<10:
             idx += 151
         else:
@@ -134,8 +138,12 @@ def save_result_as_numpy(
         if x.ndim == 3:
             x = x.unsqueeze(0)
         x = x.to(device=device)
+        print(x.shape)
         with torch.no_grad():
-            preds = torch.round(torch.sigmoid(model(x))).cpu()
+            preds = model(x)
+            preds = torch.round(preds.sigmoid())
+            preds = preds.to('cpu')
+            # preds = torch.round(torch.sigmoid(model(x))).cpu()
             preds = preds.squeeze(0).permute(1, 2, 0).numpy()
         # why ssibal size 160x240?
         np.save(
