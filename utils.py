@@ -58,7 +58,6 @@ def get_loaders(
 
 def get_test_loader(
     test_dir,
-    test_maskdir,
     batch_size,
     train_transform,
     num_workers=4,
@@ -66,7 +65,6 @@ def get_test_loader(
 ):
     test_ds = SpineDataset(
         image_dir=test_dir,
-        mask_dir=test_maskdir,
         transform=train_transform,
     )
 
