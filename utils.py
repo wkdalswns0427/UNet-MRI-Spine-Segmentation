@@ -127,14 +127,19 @@ def save_result_as_numpy(
 ):
     model.eval()
     for idx, (x) in enumerate(loader.dataset):
+        if idx<10:
+            idx += 151
+        else:
+            idx += 171
         if x.ndim == 3:
             x = x.unsqueeze(0)
         x = x.to(device=device)
         with torch.no_grad():
             preds = torch.round(torch.sigmoid(model(x))).cpu()
             preds = preds.squeeze(0).permute(1, 2, 0).numpy()
+        # why ssibal size 160x240?
         np.save(
-            f"{folder}/pred_{idx}.npy", preds
+            f"{folder}/{idx}.npy", preds
         )  # probability
         # torchvision.utils.save_image(y.unsqueeze(1), f"{folder}{idx}.png")
 

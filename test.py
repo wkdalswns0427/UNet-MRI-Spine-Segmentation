@@ -15,7 +15,7 @@ from utils import (
 
 LEARNING_RATE = 1e-3
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-BATCH_SIZE = 8
+BATCH_SIZE = 4
 NUM_EPOCHS = 3
 NUM_WORKERS = 2
 IMAGE_HEIGHT = 160  # 1280 originally
@@ -28,7 +28,7 @@ TEST_IMG_DIR = "Test/img/"
 def test_fn():
     test_transform = A.Compose(
         [
-            A.Resize(height=IMAGE_HEIGHT, width=IMAGE_WIDTH),
+            # A.Resize(height=IMAGE_HEIGHT, width=IMAGE_WIDTH),
             A.Normalize(
                 # mean=[0.0, 0.0, 0.0],
                 # std=[1.0, 1.0, 1.0],
