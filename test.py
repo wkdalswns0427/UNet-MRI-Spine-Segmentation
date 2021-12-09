@@ -45,7 +45,7 @@ def test_fn():
         ],
     )
 
-    model = UNet(in_channels=1, out_channels=1).to(DEVICE)  # change out_channel for multi classes
+    model = UNet(in_channels=1, out_channels=1).eval().to(DEVICE)  # change out_channel for multi classes
 
     test_loader = get_test_loader(
         VAL_IMG_DIR,

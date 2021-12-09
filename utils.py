@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torchvision
+import numpy as np
 from dataset import SpineDataset
 from torch.utils.data import DataLoader
 
@@ -109,14 +110,16 @@ def save_predictions_as_imgs(
     loader, model, folder="saved_images/", device="cuda"
 ):
     model.eval()
-    for idx, (x, y) in enumerate(loader):
+    for idx, (x, y) in enumerate(loader.dataset):
+        if x.ndim == 3:
+            x = x.unsqueeze(0)
         x = x.to(device=device)
         with torch.no_grad():
-            preds = torch.sigmoid(model(x))
-            preds = (preds > 0.5).float()
-        torchvision.utils.save_image(
-            preds, f"{folder}/pred_{idx}.png"
-        )
+            preds = torch.round(torch.sigmoid(model(x))).cpu()
+            preds = preds.squeeze(0).permute(1, 2, 0).numpy()
+        np.save(
+            f"{folder}/pred_{idx}.npy", preds
+        )  # probability
         # torchvision.utils.save_image(y.unsqueeze(1), f"{folder}{idx}.png")
 
     model.train()
