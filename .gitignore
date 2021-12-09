@@ -292,3 +292,4 @@ $RECYCLE.BIN/
 /trial_checkpoint.pth.tar
 
 /preprcess.ipynb
+/numpy_results/
