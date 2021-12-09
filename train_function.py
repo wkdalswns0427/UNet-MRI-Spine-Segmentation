@@ -28,7 +28,7 @@ def train_fn(loader, model, optimizer, loss_fn, scaler):
         # update tqdm loop
         loop.set_postfix(loss=loss.item())
 
-
+# not using scaler for memory issues
 def train_fn_no_scale(loader, model, optimizer, loss_fn):
     model.train()
     loop = tqdm(loader)

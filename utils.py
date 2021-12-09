@@ -121,3 +121,21 @@ def save_predictions_as_imgs(
         # torchvision.utils.save_image(y.unsqueeze(1), f"{folder}{idx}.png")
 
     model.train()
+
+def save_result_as_numpy(
+    loader, model, folder="numpy_results/", device="cuda"
+):
+    model.eval()
+    for idx, (x) in enumerate(loader.dataset):
+        if x.ndim == 3:
+            x = x.unsqueeze(0)
+        x = x.to(device=device)
+        with torch.no_grad():
+            preds = torch.round(torch.sigmoid(model(x))).cpu()
+            preds = preds.squeeze(0).permute(1, 2, 0).numpy()
+        np.save(
+            f"{folder}/pred_{idx}.npy", preds
+        )  # probability
+        # torchvision.utils.save_image(y.unsqueeze(1), f"{folder}{idx}.png")
+
+    model.train()

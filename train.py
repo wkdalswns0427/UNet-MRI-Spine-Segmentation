@@ -19,7 +19,7 @@ from utils import (
 LEARNING_RATE = 1e-3
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 BATCH_SIZE = 8
-NUM_EPOCHS = 3
+NUM_EPOCHS = 50
 NUM_WORKERS = 2
 IMAGE_HEIGHT = 160  # 1280 originally
 IMAGE_WIDTH = 240  # 1918 originally
@@ -88,6 +88,7 @@ def main():
         # train_fn(train_loader, model, optimizer, loss_fn, scaler)
         train_fn_no_scale(train_loader, model, optimizer, loss_fn)
 
+        print("Current Epoch : ", epoch, "/", NUM_EPOCHS)
 
         #save
         checkpoint = {
@@ -102,6 +103,8 @@ def main():
         save_predictions_as_imgs(
             val_loader, model, folder="saved_imgs", device=DEVICE
         )
+
+    print("--------------------* Training Complete! *--------------------")
 
 if __name__ == "__main__":
     main()

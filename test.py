@@ -10,6 +10,7 @@ from utils import (
     get_test_loader, get_loaders,
     check_accuracy,
     save_predictions_as_imgs,
+    save_result_as_numpy,
 )
 
 LEARNING_RATE = 1e-3
@@ -22,12 +23,6 @@ IMAGE_WIDTH = 240  # 1918 originally
 PIN_MEMORY = True
 LOAD_MODEL = True
 TEST_IMG_DIR = "Test/img/"
-TEST_MASK_DIR = "Test/label/"
-# for experiment should delete
-VAL_IMG_DIR = "data/val/img/"
-VAL_MASK_DIR = "data/val/label/"
-TRAIN_IMG_DIR = "data/train/img/"
-TRAIN_MASK_DIR = "data/train/label/"
 
 
 def test_fn():
@@ -58,8 +53,8 @@ def test_fn():
     if LOAD_MODEL:
         load_checkpoint(torch.load("checkpoint.pth.tar"), model)
 
-    save_predictions_as_imgs(
-        test_loader, model, folder="saved_imgs", device=DEVICE
+    save_result_as_numpy(
+        test_loader, model, folder="numpy_results", device=DEVICE
     )
 
 if __name__ == "__main__":
