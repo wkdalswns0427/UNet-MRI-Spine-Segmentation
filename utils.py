@@ -140,11 +140,11 @@ def save_result_as_numpy(
         x = x.to(device=device)
         print(x.shape)
         with torch.no_grad():
-            preds = model(x)
+            preds = model(x).cpu()
             preds = torch.round(preds.sigmoid())
-            preds = preds.to('cpu')
-            # preds = torch.round(torch.sigmoid(model(x))).cpu()
             preds = preds.squeeze(0).permute(1, 2, 0).numpy()
+            preds = preds.astype(np.uint8)
+            print(preds.dtype)
         # why ssibal size 160x240?
         np.save(
             f"{folder}/{idx}.npy", preds

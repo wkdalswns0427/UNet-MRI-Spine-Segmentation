@@ -21,8 +21,8 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 BATCH_SIZE = 8
 NUM_EPOCHS = 50
 NUM_WORKERS = 2
-IMAGE_HEIGHT = 160  # 1280 originally
-IMAGE_WIDTH = 240  # 1918 originally
+IMAGE_HEIGHT = 160
+IMAGE_WIDTH = 240
 PIN_MEMORY = True
 LOAD_MODEL = False
 TRAIN_IMG_DIR = "data/train/img/"
@@ -100,9 +100,9 @@ def main():
         loss_fn.eval()
         check_accuracy(val_loader, model, device=DEVICE)
 
-        save_predictions_as_imgs(
-            val_loader, model, folder="saved_imgs", device=DEVICE
-        )
+        # save_predictions_as_imgs(
+        #     val_loader, model, folder="saved_imgs", device=DEVICE
+        # )
 
     print("--------------------* Training Complete! *--------------------")
 

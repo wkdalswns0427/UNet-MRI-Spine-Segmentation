@@ -26,8 +26,8 @@ class SpineDataset(Dataset):
         rawimage = dcm.dcmread(img_path).pixel_array
         image_uns = rawimage.astype(float)
         image = (np.maximum(image_uns,0)/image_uns.max())*255
+        image = np.stack([image]).transpose((1, 2, 0)) # 아래랑 순서 바꿔봄!
         image = np.uint8(image) # image
-        image = np.stack([image]).transpose((1, 2, 0))
         kwargs.update(image=image)
 
         if self.mask_dir is not None:

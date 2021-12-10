@@ -1,6 +1,8 @@
 import torch
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
+import gc
+import torch.nn.functional as F
 from tqdm import tqdm
 import torch.nn as nn
 import torch.optim as optim
@@ -13,25 +15,23 @@ from utils import (
     save_result_as_numpy,
 )
 
-LEARNING_RATE = 1e-3
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-BATCH_SIZE = 4
-NUM_EPOCHS = 3
-NUM_WORKERS = 2
-IMAGE_HEIGHT = 160  # 1280 originally
-IMAGE_WIDTH = 240  # 1918 originally
+BATCH_SIZE = 1
+NUM_WORKERS = 1
+IMAGE_HEIGHT = 160
+IMAGE_WIDTH = 240
 PIN_MEMORY = True
 LOAD_MODEL = True
 TEST_IMG_DIR = "Test/img/"
 
 
 def test_fn():
+    gc.collect()
+    torch.cuda.empty_cache()
     test_transform = A.Compose(
         [
-            # A.Resize(height=IMAGE_HEIGHT, width=IMAGE_WIDTH),
+            A.Resize(height=IMAGE_HEIGHT, width=IMAGE_WIDTH),
             A.Normalize(
-                # mean=[0.0, 0.0, 0.0],
-                # std=[1.0, 1.0, 1.0],
                 mean=[0.0],
                 std=[1.0],
                 max_pixel_value=255.0,
@@ -49,7 +49,6 @@ def test_fn():
         NUM_WORKERS,
         PIN_MEMORY,
     )
-
     if LOAD_MODEL:
         load_checkpoint(torch.load("checkpoint.pth.tar"), model)
 
