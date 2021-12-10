@@ -21,7 +21,7 @@ class DoubleConv(nn.Module):
 # feature modified
 class UNet(nn.Module):
     def __init__(
-            self, in_channels = 3, out_channels = 1, features = [64, 128, 256, 512],
+            self, in_channels = 1, out_channels = 1, features = [64, 128, 256, 512],
     ):
         super(UNet, self).__init__()
         self.ups = nn.ModuleList()
