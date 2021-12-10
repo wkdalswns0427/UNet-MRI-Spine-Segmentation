@@ -287,14 +287,16 @@ $RECYCLE.BIN/
 /Train/
 /Test/
 /data/
-/checkpoint.pth.tar
+
 /saved_imgs/
-/trial_checkpoint.pth.tar
+
 
 /preprcess.ipynb
 /numpy_results/
 /Final/
 /LastTest/
 /Final_demo/
-/newmodelcheckpointt.pth.tar
+
 /TestResults.xlsx
+
+*.pth.tar
