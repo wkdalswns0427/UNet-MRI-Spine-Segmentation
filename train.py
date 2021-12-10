@@ -19,7 +19,7 @@ from utils import (
 LEARNING_RATE = 5e-4
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 BATCH_SIZE = 8
-NUM_EPOCHS = 100
+NUM_EPOCHS = 50
 NUM_WORKERS = 2
 IMAGE_HEIGHT = 240
 IMAGE_WIDTH = 160

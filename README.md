@@ -1,5 +1,5 @@
 # Spine Segmentation with Pytorch Modified UNet
-MinJun Chang, 2021.12.08
+MinJun Chang, 2021.12.10
 
 [ Data Config ]
 

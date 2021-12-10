@@ -23,6 +23,8 @@ def upscale_results(data_dir, target_dir, save_dir):
         np.save(save_path,processed)
         print('saved')
 
+    print("--------------------* Process Over *--------------------")
+
 
 if __name__ == "__main__":
-    upscale_results('Test/img/','numpy_results','Final')
+    upscale_results('Test/img/','numpy_results','Final_demo')

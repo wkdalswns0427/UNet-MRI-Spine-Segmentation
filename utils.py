@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 import gc
 
 
-def save_checkpoint(state, filename="checkpoint.pth.tar"):
+def save_checkpoint(state, filename="newmodelcheckpointt.pth.tar"):
     print("=> Saving checkpoint")
     torch.save(state, filename)
 
@@ -145,10 +145,7 @@ def save_result_as_numpy(
             preds = preds.squeeze(0).permute(1, 2, 0).numpy()
             preds = preds.astype(np.uint8)
             print(preds.dtype)
-        # why ssibal size 160x240?
         np.save(
             f"{folder}/{idx}.npy", preds
-        )  # probability
-        # torchvision.utils.save_image(y.unsqueeze(1), f"{folder}{idx}.png")
-
+        )
     model.train()
