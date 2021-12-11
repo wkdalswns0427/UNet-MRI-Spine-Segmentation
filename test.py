@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from tqdm import tqdm
 import torch.nn as nn
 import torch.optim as optim
-from model import UNet
+from model import UNet, extralayer_UNet
 from utils import (
     load_checkpoint,
     get_test_loader, get_loaders,
@@ -18,8 +18,8 @@ from utils import (
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 BATCH_SIZE = 1
 NUM_WORKERS = 1
-IMAGE_HEIGHT = 240
-IMAGE_WIDTH = 160
+IMAGE_HEIGHT = 1500
+IMAGE_WIDTH = 750
 PIN_MEMORY = True
 LOAD_MODEL = True
 TEST_IMG_DIR = "Test/img/"
@@ -51,7 +51,7 @@ def test_fn():
         PIN_MEMORY,
     )
     if LOAD_MODEL:
-        load_checkpoint(torch.load("checkpoint.pth.tar"), model)
+        load_checkpoint(torch.load("trained_models/supertrained.pth.tar"), model)
 
     save_result_as_numpy(
         test_loader, model, folder="numpy_results", device=DEVICE

@@ -4,7 +4,7 @@ from albumentations.pytorch import ToTensorV2
 from tqdm import tqdm
 import torch.nn as nn
 import torch.optim as optim
-from model import UNet
+from model import UNet , extralayer_UNet
 from loss_function import BCEDiceIoUWithLogitsLoss2d
 from train_function import (train_fn, train_fn_no_scale)
 from utils import (
@@ -16,10 +16,10 @@ from utils import (
 )
 
 # Hyperparameters and directories
-LEARNING_RATE = 5e-4
+LEARNING_RATE = 1e-4
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 BATCH_SIZE = 8
-NUM_EPOCHS = 50
+NUM_EPOCHS = 100
 NUM_WORKERS = 2
 IMAGE_HEIGHT = 240
 IMAGE_WIDTH = 160
@@ -59,7 +59,8 @@ def main():
         ],
     )
 
-    model = UNet(in_channels=1, out_channels=7).to(DEVICE) # change out_channel for multi classes
+    model = extralayer_UNet(in_channels=1, out_channels=7).to(DEVICE)
+    # model = UNet(in_channels=1, out_channels=7).to(DEVICE)
     loss_fn = BCEDiceIoUWithLogitsLoss2d()
     # loss_fn = nn.BCEWithLogitsLoss()
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)

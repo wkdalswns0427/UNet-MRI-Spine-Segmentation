@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 import gc
 
 
-def save_checkpoint(state, filename="newmodelcheckpointt.pth.tar"):
+def save_checkpoint(state, filename="trained_models/newmodelcheckpointt.pth.tar"):
     print("=> Saving checkpoint")
     torch.save(state, filename)
 

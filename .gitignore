@@ -300,3 +300,4 @@ $RECYCLE.BIN/
 /TestResults.xlsx
 
 *.pth.tar
+/trained_models/
