@@ -16,10 +16,12 @@ from utils import (
 )
 
 # Hyperparameters and directories
-LEARNING_RATE = 1e-4
+LEARNING_RATE = 1e-3
+step_lr_denominator = 10
+gamma = 0.5
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 BATCH_SIZE = 8
-NUM_EPOCHS = 100
+NUM_EPOCHS = 50
 NUM_WORKERS = 2
 IMAGE_HEIGHT = 240
 IMAGE_WIDTH = 160
@@ -59,11 +61,12 @@ def main():
         ],
     )
 
-    model = extralayer_UNet(in_channels=1, out_channels=7).to(DEVICE)
+    model = UNet(in_channels=1, out_channels=7).to(DEVICE)
     # model = UNet(in_channels=1, out_channels=7).to(DEVICE)
     loss_fn = BCEDiceIoUWithLogitsLoss2d()
     # loss_fn = nn.BCEWithLogitsLoss()
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
+    scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=int(NUM_EPOCHS/step_lr_denominator), gamma=gamma)
 
     train_loader, val_loader = get_loaders(
         TRAIN_IMG_DIR,
@@ -99,6 +102,7 @@ def main():
         save_checkpoint(checkpoint)
         model.eval()
         loss_fn.eval()
+        scheduler.step()
         check_accuracy(val_loader, model, device=DEVICE)
 
         # save_predictions_as_imgs(

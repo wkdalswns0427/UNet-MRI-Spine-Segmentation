@@ -17,9 +17,11 @@ from utils import (
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 BATCH_SIZE = 1
-NUM_WORKERS = 1
-IMAGE_HEIGHT = 1500
-IMAGE_WIDTH = 750
+NUM_WORKERS = 2
+# IMAGE_HEIGHT = 240
+# IMAGE_WIDTH = 160
+IMAGE_HEIGHT = 480
+IMAGE_WIDTH = 360
 PIN_MEMORY = True
 LOAD_MODEL = True
 TEST_IMG_DIR = "Test/img/"
@@ -51,7 +53,7 @@ def test_fn():
         PIN_MEMORY,
     )
     if LOAD_MODEL:
-        load_checkpoint(torch.load("trained_models/supertrained.pth.tar"), model)
+        load_checkpoint(torch.load("trained_models/loss077b16s480360.pth.tar"), model)
 
     save_result_as_numpy(
         test_loader, model, folder="numpy_results", device=DEVICE

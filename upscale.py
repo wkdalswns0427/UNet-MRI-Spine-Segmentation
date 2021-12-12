@@ -27,4 +27,4 @@ def upscale_results(data_dir, target_dir, save_dir):
 
 
 if __name__ == "__main__":
-    upscale_results('Test/img/','numpy_results','Final_demo')
+    upscale_results('Test/img/','numpy_results','Final/8')
