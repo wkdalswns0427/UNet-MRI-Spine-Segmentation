@@ -55,16 +55,13 @@ def iou_loss_2d(output, target, reduction=_default_reduction):
     return _iou_loss(mul, add, nd=2, reduction=reduction)
 
 
-# Utils
-
-
 def one_hot_nd(tensor, n_classes, nd):  # N H W
     new_shape = list(range(tensor.ndim))
     new_shape.insert(-nd, tensor.ndim)
     return __functional_one_hot(tensor.long(), n_classes).permute(new_shape)  # N C H W
 
 
-class BCEDiceIoUWithLogitsLoss2d(_WeightedLoss):  # Use with sigmoid
+class BCEDiceIoUWithLogitsLoss2d(_WeightedLoss):  # with sigmoid
 
     def __init__(self, dice_factor=1., bce_factor=2., iou_factor=2., bce_weight=None, reduction='mean'):
         super().__init__(weight=bce_weight, reduction=reduction)
@@ -73,7 +70,6 @@ class BCEDiceIoUWithLogitsLoss2d(_WeightedLoss):  # Use with sigmoid
         self.iou_factor = iou_factor
 
     def forward(self, logit, target):
-        # target = one_hot_nd(target, logit.size(-3), 2).to(logit)
         bce = F.binary_cross_entropy_with_logits(logit, target, weight=self.weight, reduction=self.reduction) * \
             self.bce_factor
         if not self.training:

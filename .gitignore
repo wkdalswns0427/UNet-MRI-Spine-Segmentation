@@ -301,3 +301,5 @@ $RECYCLE.BIN/
 
 *.pth.tar
 /trained_models/
+/FinalTest/
+/Final_demo/

@@ -21,7 +21,7 @@ step_lr_denominator = 10
 gamma = 0.5
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 BATCH_SIZE = 8
-NUM_EPOCHS = 50
+NUM_EPOCHS = 150
 NUM_WORKERS = 2
 IMAGE_HEIGHT = 240
 IMAGE_WIDTH = 160
@@ -62,9 +62,7 @@ def main():
     )
 
     model = UNet(in_channels=1, out_channels=7).to(DEVICE)
-    # model = UNet(in_channels=1, out_channels=7).to(DEVICE)
     loss_fn = BCEDiceIoUWithLogitsLoss2d()
-    # loss_fn = nn.BCEWithLogitsLoss()
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=int(NUM_EPOCHS/step_lr_denominator), gamma=gamma)
 
@@ -80,16 +78,9 @@ def main():
         PIN_MEMORY,
     )
 
-    # if LOAD_MODEL:
-    #     load_checkpoint(torch.load("checkpoint.pth.tar"), model)
-    # check_accuracy(val_loader, model, device=DEVICE)
-
-    # scaler = torch.cuda.amp.GradScaler()
-
     for epoch in range(NUM_EPOCHS):
         model.train()
         loss_fn.train()
-        # train_fn(train_loader, model, optimizer, loss_fn, scaler)
         train_fn_no_scale(train_loader, model, optimizer, loss_fn)
 
         print("Current Epoch : ", epoch+1, "/", NUM_EPOCHS)
@@ -103,12 +94,6 @@ def main():
         model.eval()
         loss_fn.eval()
         scheduler.step()
-        check_accuracy(val_loader, model, device=DEVICE)
-
-        # save_predictions_as_imgs(
-        #     val_loader, model, folder="saved_imgs", device=DEVICE
-        # )
-
     print("--------------------* Training Complete! *--------------------")
 
 if __name__ == "__main__":

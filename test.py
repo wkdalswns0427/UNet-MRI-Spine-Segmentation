@@ -18,14 +18,11 @@ from utils import (
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 BATCH_SIZE = 1
 NUM_WORKERS = 2
-# IMAGE_HEIGHT = 240
-# IMAGE_WIDTH = 160
 IMAGE_HEIGHT = 480
 IMAGE_WIDTH = 360
 PIN_MEMORY = True
 LOAD_MODEL = True
-TEST_IMG_DIR = "Test/img/"
-# Test_IMG_DIR = "LastTest/img/"
+TEST_IMG_DIR = "FinalTest/img/"
 
 
 def test_fn():
