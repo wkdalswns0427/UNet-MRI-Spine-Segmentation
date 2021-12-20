@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 import gc
 
 
-def save_checkpoint(state, filename="trained_models/epoch150.pth.tar"):
+def save_checkpoint(state, filename="trained_models/final.pth.tar"):
     print("=> Saving checkpoint")
     torch.save(state, filename)
 
@@ -131,10 +131,12 @@ def save_result_as_numpy(
     for idx, (x) in enumerate(loader.dataset):
         gc.collect()
         torch.cuda.empty_cache()
-        if idx<10:
-            idx += 151
+        if idx<30:
+            idx+=121
+        elif 29<idx<50 :
+            idx+=131
         else:
-            idx += 171
+            idx+=141
         if x.ndim == 3:
             x = x.unsqueeze(0)
         x = x.to(device=device)
