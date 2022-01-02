@@ -10,13 +10,8 @@ input label : .mat (num, 'label_separated',[W, H, C])
 
 training data files are not in this repository, access google drive below
 
-https://drive.google.com/drive/folders/1u7upLae6Y_rsD3WlLH5w9wmyS72apE3G?usp=sharing
-
 Test data files also not in this repo
 
-https://drive.google.com/drive/folders/1A0BGxDaAugJXfJSYWuOjd8BCV_ZB4RqG?usp=sharing
-
-https://drive.google.com/drive/folders/15jIHjNB47eLC0l0UX1m-m-swh_AgDEur?usp=sharing
 *****************************************************************
 
 * if using COLAB Environment must run the following and restart kernel to use updated Numpy
