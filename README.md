@@ -8,9 +8,9 @@ input Image  : .dcm
 input label : .mat (num, 'label_separated',[W, H, C])
 *****************************************************************
 
-training data files are not in this repository, access google drive below
+training data files are not in this repository, contact me if required
 
-Test data files also not in this repo
+Test data files also not in this repo, same sa above :)
 
 *****************************************************************
 
